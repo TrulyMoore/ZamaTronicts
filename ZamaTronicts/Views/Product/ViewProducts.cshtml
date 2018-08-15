@@ -1,0 +1,84 @@
+﻿@model ZamaTronicts.Models.ProductViewModel
+
+@{
+    ViewBag.Title = "ViewProducts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ViewProducts</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+
+        </th>
+        <th>
+
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.singleProductPO.productDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.singleProductPO.productProcessor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.singleProductPO.productOperatingSystem)
+        </th>
+        <th>
+       
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.singleProductPO.productRam)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.singleProductPO.productPrice)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.listProductPO)
+    {
+    <tr>
+        <td>
+            @Html.HiddenFor(modelItem => Model.userTableID)
+        </td>
+        <td>
+            @Html.HiddenFor(modelItem => item.productID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.productDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.productProcessor)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.productOperatingSystem)
+        </td>
+        <td>
+            @Html.HiddenFor(modelItem => item.productQuantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.productRam)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.productPrice)
+        </td>
+
+        <td>
+            @Html.ActionLink("Update", "UpdateProduct", new { productID = item.productID })
+        </td>
+        <td>
+            @Html.ActionLink("Delete", "DeleteProduct", new { productID = item.productID })
+        <td>
+            @Html.ActionLink("Add to Cart", "AddToCart", "Cart", new { productID = item.productID }, new { @class = "" })
+        </td>
+        <td>
+            @Html.ActionLink("View Cart", "ViewCart", "Cart", new { userTableID = Model.userTableID }, new { @class = "" })
+        </td>
+    </tr>
+    }
+
+</table>

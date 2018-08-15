@@ -1,0 +1,90 @@
+﻿@model ZamaTronicts.Models.UserViewModel
+
+@{
+    ViewBag.Title = "ViewUsers";
+}
+
+<h2>ViewUsers</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+
+        </th>
+        <th>
+
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.singleUserPO.accountFirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.singleUserPO.accountLastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.singleUserPO.accountEmail)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.singleUserPO.accountPhoneNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.singleUserPO.accountAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.singleUserPO.accountCity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.singleUserPO.accountState)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.singleUserPO.accountZip)
+        </th>
+
+
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.listUserPO) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.userTableID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.accountInfoID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.accountFirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.accountLastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.accountEmail)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.accountPhoneNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.accountAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.accountCity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.accountState)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.accountZip)
+        </td>
+        <td>
+            @Html.ActionLink("Update", "UpdateUser", new { userTableID = item.userTableID, accountInfoID = item.accountInfoID })
+        </td>
+        <td>
+            @Html.ActionLink("Delete", "DeleteUser", new { userTableID = item.userTableID, accountInfoID = item.accountInfoID })
+
+
+
+    </tr>
+}
+
+</table>

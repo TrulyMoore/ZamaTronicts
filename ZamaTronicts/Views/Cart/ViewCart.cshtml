@@ -1,0 +1,144 @@
+﻿@model ZamaTronicts.Models.CartViewModel
+
+@{
+    ViewBag.Title = "ViewCart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+ 
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("CheckOut", "CreateTransactions", new { userTableID = Model.singleItemPO.userTableID})
+
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav"></ul>
+        </div>
+    </div>
+</div>
+
+<h2>ViewCart</h2>
+<div class="col-md-offset-2 col-md-10">
+    <input type="submit" value="Checkout" class="btn btn-default" />
+</div>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.singleItemPO.supplierName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.singleItemPO.productDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.singleItemPO.productPrice)
+        </th>
+
+        <th>
+            @Html.DisplayNameFor(model => model.singleItemPO.checkOutQuantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.singleItemPO.checkOutTax)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.singleItemPO.checkOutShipping)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.singleItemPO.checkOutTotal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.singleItemPO.checkOutDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.itemTotal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.finalTotal)
+        </th>
+
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.listOfItemsPO)
+    {
+        using (Html.BeginForm("UpdateItemQuantity", "Cart"))
+        {
+    <tr>
+        
+            @Html.HiddenFor(modelItem => item.checkOutID)
+        
+            @Html.HiddenFor(modelItem => item.userTableID)
+       
+            @Html.HiddenFor(modelItem => item.productID)
+        
+            @Html.HiddenFor(modelItem => item.supplierID)
+        
+        <td>
+            @Html.DisplayFor(modelItem => item.supplierName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.productDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.productPrice)
+        </td>
+
+        <td>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+
+                <div class="col-md-10">
+                    @Html.EditorFor(model => item.checkOutQuantity, new { htmlAttributes = new { @class = "form-control", @min = "1" } })
+                    @Html.ValidationMessageFor(model => item.checkOutQuantity, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.checkOutTax)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.checkOutShipping)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.checkOutTotal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.checkOutDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.finalTotal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => Model.finalTotal)
+        </td>
+
+        <td>
+            @Html.ActionLink("Delete", "DeleteItemFromCart", new { checkOutID = item.checkOutID, userTableID = item.userTableID })
+        </td>
+        <td>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="update" class="btn btn-default" />
+                </div>
+            </div>
+        </td>
+        <td></td>
+
+    </tr>
+
+
+        }
+
+    }
+
+</table>
+  

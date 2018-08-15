@@ -1,0 +1,112 @@
+﻿@model ZamaTronicts.Models.CartViewModel
+
+@{
+    ViewBag.Title = "ViewTransactions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ViewTransactions</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.singleItemPO.supplierID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.singleItemPO.supplierName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.singleItemPO.productDescription)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.singleItemPO.productPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.singleItemPO.checkOutID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.singleItemPO.userTransactionID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.singleItemPO.datePurchase)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.singleItemPO.checkOutQuantity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.singleItemPO.checkOutTax)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.singleItemPO.checkOutShipping)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.singleItemPO.checkOutTotal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.singleItemPO.checkOutDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.singleItemPO.userTableID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.singleItemPO.productID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.singleItemPO.finalTotal)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.listOfItemsPO) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.supplierID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.supplierName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.productDescription)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.productPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.checkOutID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.userTransactionID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.datePurchase)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.checkOutQuantity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.checkOutTax)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.checkOutShipping)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.checkOutTotal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.checkOutDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.userTableID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.productID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.finalTotal)
+        </td>
+       
+    </tr>
+}
+
+</table>

@@ -1,0 +1,71 @@
+﻿@model ZamaTronicts.Models.SupplierViewModel
+  
+
+@{
+    ViewBag.Title = "ViewSuppliers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>ViewSuppliers</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+           
+        </th>
+
+        <th>
+            Name of the Supplier
+        </th>
+        <th>
+            Supplier Address
+        </th>
+        <th>
+            City
+        </th>
+        <th>
+            State
+        </th>
+        <th>
+            Zip
+        </th>
+        <th>
+            Phone Number
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.listSupplierPO) {
+    <tr>
+        <td>
+            @Html.HiddenFor(modelItem => item.supplierID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.supplierName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.supplierAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.supplierCity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.supplierState)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.supplierZip)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.supplierPhoneNumber)
+        </td>
+        <td>
+            @Html.ActionLink("Update", "UpdateSupplier", new { supplierID = item.supplierID })
+        </td>
+        <td>
+            @Html.ActionLink("Delete", "DeleteSupplier", new { supplierID = item.supplierID })
+
+    </tr>
+}
+
+</table>
