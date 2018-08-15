@@ -12,6 +12,7 @@ namespace ZamaTronicts.Controllers
 {
     public class CartController : Controller
     {
+        // finish transaction table
 
         static Mapper _mapper = new Mapper();
         static CartDataAccess _cartDataAccess = new CartDataAccess();
