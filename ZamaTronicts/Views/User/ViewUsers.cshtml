@@ -80,11 +80,15 @@
             @Html.ActionLink("Update", "UpdateUser", new { userTableID = item.userTableID, accountInfoID = item.accountInfoID })
         </td>
         <td>
-            @Html.ActionLink("Delete", "DeleteUser", new { userTableID = item.userTableID, accountInfoID = item.accountInfoID })
+            @if ((int)Session["userTableID"] != item.userTableID)
+            {
+
+                @Html.ActionLink("Delete", "DeleteUser", new { userTableID = item.userTableID, accountInfoID = item.accountInfoID })
+            }
+            </td>
 
 
-
-    </tr>
+</tr>
 }
 
 </table>

@@ -127,6 +127,7 @@
     <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="Models\SupplierPO.cs" />
     <Compile Include="Models\SupplierViewModel.cs" />
+    <Compile Include="Models\UserLoginPO.cs" />
     <Compile Include="Models\UserPO.cs" />
     <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -150,6 +151,7 @@
     <Content Include="Views\User\UpdateUser.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Cart\ViewTransactions.cshtml" />
+    <Content Include="Views\User\CreateRole.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

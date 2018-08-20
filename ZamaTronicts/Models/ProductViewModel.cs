@@ -11,6 +11,7 @@ namespace ZamaTronicts.Models
         public ProductPO singleProductPO { get; set; }
         public List<ProductPO> listProductPO { get; set; }
         public int userTableID { get; set; }
+        
         // create the method for the productViewModel
         public ProductViewModel()
         {

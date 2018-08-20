@@ -41,6 +41,7 @@ namespace ZamaTronicts.Controllers
         [HttpGet]
         public ActionResult UpdateUser(int userTableID, int accountInfoID)
         {
+            DropDown();
             // instaniate a new usermodel
             UserViewModel _userModel = new UserViewModel();
 
@@ -55,6 +56,7 @@ namespace ZamaTronicts.Controllers
         [HttpPost]
         public ActionResult UpdateUser(UserPO userToMap)
         {
+           
             // pass the user through the mapper to the method in the DAL
             _userDataAccess.UpdateUser(_mapper.Map(userToMap));
 
@@ -81,9 +83,11 @@ namespace ZamaTronicts.Controllers
         [HttpGet]
         public ActionResult DeleteUser(int userTableID, int accountInfoID)
         {
-            // pass the userID to the method in the DAL
-            _userDataAccess.DeleteUser(userTableID, accountInfoID);
-
+            if ((string)Session["roleName"] == "admin")
+            {
+                // pass the userID to the method in the DAL
+                _userDataAccess.DeleteUser(userTableID, accountInfoID);
+            }
             // return the view to view all of the users
             return RedirectToAction("ViewUsers");
         }
@@ -99,34 +103,40 @@ namespace ZamaTronicts.Controllers
         public ActionResult Login(UserPO userModel)
         {
             // check to make sure the user is accessing the right view/browser
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 // map the info
                 UserDAO _user = _userDataAccess.LoginUser(_mapper.Map(userModel));
 
                 // if the user does not exist take them to the create user page
-                if(_user.userPassword == userModel.userPassword)
+                if (_user.userPassword == userModel.userPassword)
                 {
                     // put the user values to the sesion variables
                     Session["userTableID"] = _user.userTableID;
                     Session["roleName"] = _user.roleName;
-                    Session["userRole"]= _user.userRole;
+                    Session["userRole"] = _user.userRole;
                 }
                 else
                 {
                     // display message if the info does not match
 
                     ViewBag.errorMessage = "Incorrect username/password";
+
                     // return the view
                     return View();
                 }
-                
+
             }
-            return RedirectToAction("ViewProducts","Product");
+            // string error = ViewContext.ViewData.ModelState;
+            // ViewBag.errorMessage = error; 
+            // var errors = ModelState.Values.SelectMany(v => v.Errors);
+
+            return RedirectToAction("ViewProducts", "Product");
+
         }
 
         // create method for user logout
-        [HttpGet]
+        [HttpGet]// changed to post instead of get
         public ActionResult Logout()
         {
             // abandon the session
@@ -134,6 +144,36 @@ namespace ZamaTronicts.Controllers
 
             // return home
             return RedirectToAction("Index", "Home");
+        }
+        [HttpGet]
+        private void DropDown()
+        {
+            ViewBag.ListRoles = new List<SelectListItem>();
+            List<UserPO> role = _mapper.Map(_userDataAccess.ViewAllRoles());
+            foreach (UserPO roles in role)
+            {
+                ViewBag.ListRoles.Add(new SelectListItem { Text = roles.roleName, Value = roles.userRole.ToString() });
+            }
+        }
+        [HttpGet]
+        public ActionResult CreateRole()
+        {
+            // create a new instance  of userModel
+            UserPO _userModel = new UserPO();
+
+            // return the userModel and view
+            return View(_userModel);
+        }
+
+        [HttpPost]
+        public ActionResult CreateRole(UserPO userModel)
+        {
+            // pass the user model through the mapper to the method
+            
+            _userDataAccess.CreateRole(_mapper.Map(userModel));
+
+            // return to the login page
+            return RedirectToAction("Login");
         }
     }
 }

@@ -18,11 +18,15 @@ namespace ZamaTronicts.Controllers
         [HttpGet]
         public ActionResult CreateSupplier()
         {
-            // create a new instance of the viewModel
-            SupplierViewModel supplierViewModel = new SupplierViewModel();
+            if ((string)Session["roleName"] == "admin" || (string)Session["roleName"] == "moderator")
+            {
+                // create a new instance of the viewModel
+                SupplierViewModel supplierViewModel = new SupplierViewModel();
 
-            // return the view and pass an instance of singleSupplier
-            return View(supplierViewModel.singleSupplierPO);
+                // return the view and pass an instance of singleSupplier
+                return View(supplierViewModel.singleSupplierPO);
+            }
+            return RedirectToAction("ViewProducts");
         }
 
         [HttpPost]
@@ -39,15 +43,19 @@ namespace ZamaTronicts.Controllers
         [HttpGet]
         public ActionResult UpdateSupplier(int supplierID)
         {
-            // create a new instance of the productViewModel
-            SupplierViewModel _supplierViewModel = new SupplierViewModel();
+            if ((string)Session["roleName"] == "admin" || (string)Session["roleName"] == "moderator")
+            {
+                // create a new instance of the productViewModel
+                SupplierViewModel _supplierViewModel = new SupplierViewModel();
 
-            // pass the supplier ID to the view method and pass to the product dataAccess 
-            //through the mapper then to the single supplier
-            _supplierViewModel.singleSupplierPO = _mapper.Map(_supplierDataAccess.ViewOneSupplier(supplierID));
+                // pass the supplier ID to the view method and pass to the product dataAccess 
+                //through the mapper then to the single supplier
+                _supplierViewModel.singleSupplierPO = _mapper.Map(_supplierDataAccess.ViewOneSupplier(supplierID));
 
-            // return the view with supplierview.singleproduct
-            return View(_supplierViewModel.singleSupplierPO);
+                // return the view with supplierview.singleproduct
+                return View(_supplierViewModel.singleSupplierPO);
+            }
+            return RedirectToAction("ViewProducts");
         }
 
         [HttpPost]
@@ -64,24 +72,30 @@ namespace ZamaTronicts.Controllers
         [HttpGet]
         public ActionResult ViewSuppliers()
         {
-            // create a new instance of supplerViewModel
-            SupplierViewModel _supplierViewModel = new SupplierViewModel();
+            if ((string)Session["roleName"] == "admin" || (string)Session["roleName"] == "moderator")
+            {
+                // create a new instance of supplerViewModel
+                SupplierViewModel _supplierViewModel = new SupplierViewModel();
 
-            // call the view suppliers method pass it through the dataAccess and mapper
-            // then set it to the supplier list
-            _supplierViewModel.listSupplierPO = _mapper.Map(_supplierDataAccess.ViewAllSuppliers());
+                // call the view suppliers method pass it through the dataAccess and mapper
+                // then set it to the supplier list
+                _supplierViewModel.listSupplierPO = _mapper.Map(_supplierDataAccess.ViewAllSuppliers());
 
-            // return the view
-            return View(_supplierViewModel);
+                // return the view
+                return View(_supplierViewModel);
+            }
+            return RedirectToAction("ViewProducts");
         }
 
         // create a method to delete a book
         [HttpGet]
         public ActionResult DeleteSupplier(int supplierID)
         {
-            // pass the id to the method then to the DAL
-            _supplierDataAccess.DeleteSupplier(supplierID);
-
+            if ((string)Session["roleName"] == "admin")
+            {
+                // pass the id to the method then to the DAL
+                _supplierDataAccess.DeleteSupplier(supplierID);
+            }
             // return the view suppler page
             return RedirectToAction("ViewSuppliers");
         }

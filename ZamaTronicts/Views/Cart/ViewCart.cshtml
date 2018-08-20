@@ -13,7 +13,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            @Html.ActionLink("CheckOut", "CreateTransactions", new { userTableID = Model.singleItemPO.userTableID})
+         
 
         </div>
         <div class="navbar-collapse collapse">
@@ -23,14 +23,13 @@
 </div>
 
 <h2>ViewCart</h2>
-<div class="col-md-offset-2 col-md-10">
-    <input type="submit" value="Checkout" class="btn btn-default" />
-</div>
+
 
 
 <table class="table">
     <tr>
         <th>
+
             @Html.DisplayNameFor(model => model.singleItemPO.supplierName)
         </th>
         <th>
@@ -50,9 +49,6 @@
             @Html.DisplayNameFor(model => model.singleItemPO.checkOutShipping)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.singleItemPO.checkOutTotal)
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.singleItemPO.checkOutDate)
         </th>
         <th>
@@ -67,78 +63,78 @@
 
     @foreach (var item in Model.listOfItemsPO)
     {
-        using (Html.BeginForm("UpdateItemQuantity", "Cart"))
-        {
     <tr>
-        
-            @Html.HiddenFor(modelItem => item.checkOutID)
-        
-            @Html.HiddenFor(modelItem => item.userTableID)
-       
-            @Html.HiddenFor(modelItem => item.productID)
-        
-            @Html.HiddenFor(modelItem => item.supplierID)
-        
-        <td>
-            @Html.DisplayFor(modelItem => item.supplierName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.productDescription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.productPrice)
-        </td>
 
-        <td>
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @using (Html.BeginForm("UpdateItemQuantity", "Cart"))
+        {
 
-            <div class="form-group">
 
-                <div class="col-md-10">
-                    @Html.EditorFor(model => item.checkOutQuantity, new { htmlAttributes = new { @class = "form-control", @min = "1" } })
-                    @Html.ValidationMessageFor(model => item.checkOutQuantity, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => item.checkOutID)
+
+            @Html.HiddenFor(model => item.userTableID)
+
+            @Html.HiddenFor(model => item.productID)
+
+            @Html.HiddenFor(model => item.supplierID)
+
+            <td>
+                @Html.DisplayFor(model => item.supplierName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.productDescription)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.productPrice)
+            </td>
+
+            <td>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <div class="form-group">
+
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => item.checkOutQuantity, new { htmlAttributes = new { @class = "form-control", @min = "1" } })
+                        @Html.ValidationMessageFor(model => item.checkOutQuantity, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-            </div>
 
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.checkOutTax)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.checkOutShipping)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.checkOutTotal)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.checkOutDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.finalTotal)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => Model.finalTotal)
-        </td>
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.checkOutTax)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.checkOutShipping)
+            </td>
 
-        <td>
-            @Html.ActionLink("Delete", "DeleteItemFromCart", new { checkOutID = item.checkOutID, userTableID = item.userTableID })
-        </td>
-        <td>
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="update" class="btn btn-default" />
+            <td>
+                @Html.DisplayFor(model => item.checkOutDate)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.total)
+            </td>
+            <td>
+                @Html.DisplayFor(model => Model.finalTotal)
+            </td>
+
+            <td>
+                @Html.ActionLink("Delete", "DeleteItemFromCart", new { checkOutID = item.checkOutID, userTableID = item.userTableID })
+            </td>
+            <td>
+
+                <div class="form-group">
+
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Update" class="btn btn-default" />
+                    </div>
                 </div>
-            </div>
-        </td>
-        <td></td>
+            </td>
 
-    </tr>
+
 
 
         }
+    </tr>
+        }
 
-    }
-
-</table>
+    </table>
   

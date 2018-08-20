@@ -1,4 +1,4 @@
-﻿@model ZamaTronicts.Models.CartViewModel
+﻿@model List<ZamaTronicts.Models.CartPO>
 
 @{
     ViewBag.Title = "ViewTransactions";
@@ -11,57 +11,50 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.singleItemPO.supplierID)
+            @Html.DisplayFor(model => model[0].supplierID)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.singleItemPO.supplierName)
+            @Html.DisplayNameFor(model => model[0].supplierName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.singleItemPO.productDescription)
+            @Html.DisplayNameFor(model => model[0].productDescription)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.singleItemPO.productPrice)
+            @Html.DisplayNameFor(model => model[0].productPrice)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.singleItemPO.checkOutID)
+            @Html.HiddenFor(model => model[0].checkOutID)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.singleItemPO.userTransactionID)
+            @Html.HiddenFor(model => model[0].userTransactionID)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.singleItemPO.datePurchase)
+            @Html.DisplayNameFor(model => model[0].datePurchase)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.singleItemPO.checkOutQuantity)
+            @Html.DisplayNameFor(model => model[0].checkOutQuantity)
+        </th>
+      
+        <th>
+            @Html.DisplayNameFor(model => model[0].checkOutShipping)
+        </th>
+
+        <th>
+            @Html.HiddenFor(model => model[0].userTableID)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.singleItemPO.checkOutTax)
+            @Html.HiddenFor(model => model[0].productID)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.singleItemPO.checkOutShipping)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.singleItemPO.checkOutTotal)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.singleItemPO.checkOutDate)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.singleItemPO.userTableID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.singleItemPO.productID)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.singleItemPO.finalTotal)
+            @Html.DisplayNameFor(model => model[0].finalTotal)
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model.listOfItemsPO) {
+@foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.supplierID)
+            @Html.HiddenFor(modelItem => item.supplierID)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.supplierName)
@@ -73,10 +66,10 @@
             @Html.DisplayFor(modelItem => item.productPrice)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.checkOutID)
+            @Html.HiddenFor(modelItem => item.checkOutID)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.userTransactionID)
+            @Html.HiddenFor(modelItem => item.userTransactionID)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.datePurchase)
@@ -84,23 +77,16 @@
         <td>
             @Html.DisplayFor(modelItem => item.checkOutQuantity)
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.checkOutTax)
-        </td>
+       
         <td>
             @Html.DisplayFor(modelItem => item.checkOutShipping)
         </td>
+       
         <td>
-            @Html.DisplayFor(modelItem => item.checkOutTotal)
+            @Html.HiddenFor(modelItem => item.userTableID)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.checkOutDate)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.userTableID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.productID)
+            @Html.HiddenFor(modelItem => item.productID)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.finalTotal)

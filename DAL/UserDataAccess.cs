@@ -48,7 +48,7 @@ namespace DAL
                         _Command.Parameters.AddWithValue("@accountZip", userToCreate.accountZip);
                         _Command.Parameters.AddWithValue("@userName", userToCreate.userName);
                         _Command.Parameters.AddWithValue("@userPassword", userToCreate.userPassword);
-                        _Command.Parameters.AddWithValue("@userRole", userToCreate.userRole);
+                       // _Command.Parameters.AddWithValue("@userRole", userToCreate.userRole);
                         // open the connection
                         _Connection.Open();
                         // execute the command/stored procedure
@@ -89,6 +89,7 @@ namespace DAL
                         // specify the command is a stored procedure
                         _Command.CommandType = System.Data.CommandType.StoredProcedure;
                         // pass the info to the stored procedure
+                        _Command.Parameters.AddWithValue("@userTableID", userToUpdate.userTableID);
                         _Command.Parameters.AddWithValue("@accountInfoID", userToUpdate.accountInfoID);
                         _Command.Parameters.AddWithValue("@accountFirstName", userToUpdate.accountFirstName);
                         _Command.Parameters.AddWithValue("@accountLastName", userToUpdate.accountLastName);
@@ -98,6 +99,7 @@ namespace DAL
                         _Command.Parameters.AddWithValue("@accountCity", userToUpdate.accountCity);
                         _Command.Parameters.AddWithValue("@accountState", userToUpdate.accountState);
                         _Command.Parameters.AddWithValue("@accountZip", userToUpdate.accountZip);
+                        _Command.Parameters.AddWithValue("@userRole", userToUpdate.userRole);
                         // open the connection
                         _Connection.Open();
                         // execute the command/stored procedure
@@ -332,7 +334,103 @@ namespace DAL
             }
             return _User;
         }
+        public List<UserDAO> ViewAllRoles()
 
+        {
+            // create a new instance of userDAO 
+            List<UserDAO> _UserList = new List<UserDAO>();
+
+            // set the bool to false
+            bool success = false;
+
+            // create try catch to catch any possible errors
+            try
+            {
+                // create a using statment to use the connection string
+                using (SqlConnection _Connection = new SqlConnection(connectionString))
+                {
+                    // create using statment to specify the stored procedure
+                    using (SqlCommand _Command = new SqlCommand("sp_RoleTableViewAllRoles", _Connection))
+                    {
+                        // specify the command is a stored procedure
+                        _Command.CommandType = System.Data.CommandType.StoredProcedure;
+                        // open the connection
+                        _Connection.Open();
+
+                        // create a using statement using the reader to reader through the list
+                        using (SqlDataReader _Reader = _Command.ExecuteReader())
+                        {
+                            // create a while loop to read throught the whole record
+                            while (_Reader.Read())
+                            {
+                                // create a new instance of userDOA to retrieve each item
+                                UserDAO userToList = new UserDAO();
+
+                                // get the user elements
+                                //userToList.accountInfoID = Convert.ToInt32(_Reader["accountInfoID"]);
+                                //userToList.userTableID = Convert.ToInt32(_Reader["userTableID"]);
+                                userToList.roleName = (string)(_Reader["roleName"]);
+                                userToList.userRole = Convert.ToInt32(_Reader["userRoleID"]);
+                                _UserList.Add(userToList);
+                            }
+                        }
+                        //change the bool to true
+                        success = true;
+
+                        //close the connection
+                        _Connection.Close();
+                    }
+                }
+            }
+            catch (Exception error)
+            {
+                // call the error method and pass the error
+                ErrorMessage.logger(error);
+            }
+            return _UserList;
+        }
+        public bool CreateRole(UserDAO roleToCreate)
+        {
+            // set the bool to false
+            bool success = false;
+
+            // create try catch to catch any possible errors
+            try
+            {
+                // create a using statment to use the connection string
+                using (SqlConnection _Connection = new SqlConnection(connectionString))
+                {
+                    // create using statment to specify the stored procedure
+                    using (SqlCommand _Command = new SqlCommand("sp_RoleTableCreateRole", _Connection))
+                    {
+                        // specify the command is a stored procedure
+                        _Command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                        // pass the info to the stored procedure
+                        _Command.Parameters.AddWithValue("@roleName", roleToCreate.roleName);
+                      
+                        // open the connection
+                        _Connection.Open();
+                        // execute the command/stored procedure
+                        _Command.ExecuteNonQuery();
+
+                        //change the bool to true
+                        success = true;
+
+                        //close the connection
+                        _Connection.Close();
+                    }
+                }
+            }
+            //pass the error message
+            catch (Exception error)
+            {
+                // call the error method and pass the error
+                ErrorMessage.logger(error);
+            }
+            // return the success
+            return success;
+        }
     }
 }
               

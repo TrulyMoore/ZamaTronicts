@@ -4,81 +4,196 @@
     ViewBag.Title = "ViewProducts";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
 
-<h2>ViewProducts</h2>
+        @if ((string)Session["roleName"] == "admin" || (string)Session["roleName"] == "moderator")
+        {
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="dropdown">
+                    <ul class=" nav narbar-nav">
+                        <li class=" dropdown">
+                            <a href="#" data-toggle="dropdown" class=" dropdown-toggle">
+                                Product<span class=" caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class=" active"> @Html.ActionLink("Add A Product", "CreateProduct", "Product")</li>
+                </div>
+            </div>
+        }
+        @if ((string)Session["roleName"] == "admin" || (string)Session["roleName"] == "moderator")
+        {
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="dropdown">
+                    <ul class=" nav narbar-nav">
+                        <li class=" dropdown">
+                            <a href="#" data-toggle="dropdown" class=" dropdown-toggle">
+                                Suppliers<span class=" caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class=" active"> @Html.ActionLink("View all of the Suppliers", "ViewSuppliers", "Supplier")</li>
+                                <li class=" active"> @Html.ActionLink("Add a Supplier", "CreateSupplier", "Supplier")</li>
+                </div>
+            </div>
+        }
 
+        @if ((string)Session["roleName"] == "admin" || (string)Session["roleName"] == "moderator")
+        {
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <div class="dropdown">
+                    <ul class=" nav narbar-nav">
+                        <li class=" dropdown">
+                            <a href="#" data-toggle="dropdown" class=" dropdown-toggle">
+                                Users<span class=" caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class=" active"> @Html.ActionLink("View all of the Users", "ViewUsers", "User")</li>
+                                <li class=" active"> @Html.ActionLink("Add a User", "CreateUser", "User")</li>
+                </div>
+            </div>
+        }
 
-<table class="table">
-    <tr>
-        <th>
+        
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @if ((string)Session["roleName"] == "customer")
+                {
+                    @Html.ActionLink("View Cart", "ViewCart", "Cart", new { userTableID = Model.userTableID }, new { @class = " nav narbar-nav caret" })
+                }
+           
 
-        </th>
-        <th>
+        </div>
 
-        </th>
+      
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @if ((string)Session["roleName"] == null)
+                {
+                    @Html.ActionLink("Login", "Login", "User", new { area = "" }, new { @class = " nav narbar-nav caret" })
+                }
+                @if ((string)Session["roleName"] != null)
+                {
+                    @Html.ActionLink("Logout", "Logout", "User", new { area = "" }, new { @class = " nav narbar-nav caret" })
 
-        <th>
-            @Html.DisplayNameFor(model => model.singleProductPO.productDescription)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.singleProductPO.productProcessor)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.singleProductPO.productOperatingSystem)
-        </th>
-        <th>
-       
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.singleProductPO.productRam)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.singleProductPO.productPrice)
-        </th>
+                }
+            
+        </div>
+    </div>
+    </div>
 
-        <th></th>
-    </tr>
+    
+            <h2> Here are my Products</h2>
 
-    @foreach (var item in Model.listProductPO)
-    {
-    <tr>
-        <td>
-            @Html.HiddenFor(modelItem => Model.userTableID)
-        </td>
-        <td>
-            @Html.HiddenFor(modelItem => item.productID)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.productDescription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.productProcessor)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.productOperatingSystem)
-        </td>
-        <td>
-            @Html.HiddenFor(modelItem => item.productQuantity)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.productRam)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.productPrice)
-        </td>
+        <table class="table">
+            <tr>
+                <th>
 
-        <td>
-            @Html.ActionLink("Update", "UpdateProduct", new { productID = item.productID })
-        </td>
-        <td>
-            @Html.ActionLink("Delete", "DeleteProduct", new { productID = item.productID })
-        <td>
-            @Html.ActionLink("Add to Cart", "AddToCart", "Cart", new { productID = item.productID }, new { @class = "" })
-        </td>
-        <td>
-            @Html.ActionLink("View Cart", "ViewCart", "Cart", new { userTableID = Model.userTableID }, new { @class = "" })
-        </td>
-    </tr>
-    }
+                </th>
+                <th>
 
-</table>
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.singleProductPO.supplierName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.singleProductPO.productDescription)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.singleProductPO.productProcessor)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.singleProductPO.productOperatingSystem)
+                </th>
+                <th>
+
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.singleProductPO.productRam)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.singleProductPO.productPrice)
+                </th>
+
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model.listProductPO)
+            {
+            <tr>
+                <td>
+                    @Html.HiddenFor(modelItem => Model.userTableID)
+                </td>
+                <td>
+                    @Html.HiddenFor(modelItem => item.productID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.supplierName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.productDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.productProcessor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.productOperatingSystem)
+                </td>
+                <td>
+                    @Html.HiddenFor(modelItem => item.productQuantity)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.productRam)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.productPrice)
+                 </td>
+                <td>
+                    @if ((string)Session["roleName"] == "admin" || (string)Session["roleName"] == "moderator")
+                    {
+
+                        @Html.ActionLink("Update", "UpdateProduct", new { productID = item.productID })
+
+                    }
+                </td>
+                <td>
+                    @if ((string)Session["roleName"] == "admin")
+                    {
+                        @Html.ActionLink("Delete", "DeleteProduct", new { productID = item.productID })
+                    }
+                </td>
+                <td>
+                    @if ((string)Session["roleName"] == "customer")
+                    {
+                        @Html.ActionLink("Add to Cart", "AddToCart", "Cart", new { productID = item.productID }, new { @class = "" })
+                    }
+                    </td>
+
+            </tr>
+            }
+
+        </table>
+</body>

@@ -18,7 +18,7 @@ namespace BLL.Objects
         public int productID { get; set; }
         public String supplierName { get; set; }
         public String productDescription { get; set; }
-        public decimal productPrice { get; set; }
+        public double productPrice { get; set; }
         public decimal finalTotal { get; set; }
         public int userTransactionID { get; set; }
         public DateTime datePurchase { get; set; }

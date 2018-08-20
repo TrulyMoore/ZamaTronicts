@@ -97,6 +97,7 @@ namespace DAL
                             {
                                 CartDAO _cartToList = new CartDAO();
                                 _cartToList.checkOutID = Convert.ToInt32(_Reader["checkOutID"]);
+                                _cartToList.supplierID = Convert.ToInt32(_Reader["supplierID"]);
                                 _cartToList.supplierName = (String)_Reader["supplierName"];
                                 _cartToList.productDescription = (String)_Reader["productDescription"];
                                 _cartToList.productPrice = Convert.ToDecimal(_Reader["productPrice"]);
@@ -181,7 +182,7 @@ namespace DAL
                         // specify the command is a stored procedure
                         _Command.CommandType = System.Data.CommandType.StoredProcedure;
                         // pass the ID of the product to delete
-                        _Command.Parameters.AddWithValue("checkOutID", checkOutID);
+                        _Command.Parameters.AddWithValue("@checkOutID", checkOutID);
                         _Command.Parameters.AddWithValue("@checkOutQuantity", quantity);
                         // open the connection
                         _Connection.Open();
@@ -207,7 +208,7 @@ namespace DAL
             return success;
 
         }
-        public bool CreateTransaction(CartDAO transactionToCreate)
+        public void CreateTransaction(List<CartDAO> transactionToCreate)
         {
             // set the bool to false
             bool success = false;
@@ -215,41 +216,38 @@ namespace DAL
             // create try catch to catch any possible errors
             try
             {
-                // create a using statment to use the connection string
-                using (SqlConnection _Connection = new SqlConnection(connectionString))
+                foreach (CartDAO listItem in transactionToCreate)
                 {
-                    // create using statment to specify the stored procedure
-                    using (SqlCommand _Command = new SqlCommand("sp_UserTransactionCreateTransaction", _Connection))
+                    // create a using statment to use the connection string
+                    using (SqlConnection _Connection = new SqlConnection(connectionString))
                     {
-                        // specify the command is a stored procedure
-                        _Command.CommandType = System.Data.CommandType.StoredProcedure;
-                        _Command.Parameters.AddWithValue("@userTransactionID", transactionToCreate.userTransactionID);
-                        _Command.Parameters.AddWithValue("@datePurchase", transactionToCreate.datePurchase);
-                        _Command.Parameters.AddWithValue("@userTableID", transactionToCreate.userTableID);
-                        _Command.Parameters.AddWithValue("@productID", transactionToCreate.productID);
-                        _Command.Parameters.AddWithValue("@checkOutID", transactionToCreate.checkOutID);
-                        _Command.Parameters.AddWithValue("@supplierID", transactionToCreate.supplierID);
-                        //_Command.Parameters.AddWithValue("@supplierName", transactionToCreate.supplierName);
-                        //_Command.Parameters.AddWithValue("@productDescription", transactionToCreate.productDescription);
-                        //_Command.Parameters.AddWithValue("@productPrice", transactionToCreate.productPrice);
-                        //_Command.Parameters.AddWithValue("@checkOutQuantity", transactionToCreate.checkOutQuantity);
-                        //_Command.Parameters.AddWithValue("@checkOutShipping", transactionToCreate.checkOutShipping);
-                        //_Command.Parameters.AddWithValue("@checkOutTotal", transactionToCreate.checkOutTotal);
+                        // create using statment to specify the stored procedure
+                        using (SqlCommand _Command = new SqlCommand("sp_UserTransactionCreateTransaction", _Connection))
+                        {
 
-                        // open the connection
-                        _Connection.Open();
+                            // specify the command is a stored procedure
+                            _Command.CommandType = System.Data.CommandType.StoredProcedure;
+                           // _Command.Parameters.AddWithValue("@userTransactionID", listItem.userTransactionID);
+                            _Command.Parameters.AddWithValue("@datePurchase", DateTime.Now);
+                            _Command.Parameters.AddWithValue("@userTableID", listItem.userTableID);
+                            _Command.Parameters.AddWithValue("@productID", listItem.productID);
+                            _Command.Parameters.AddWithValue("@checkOutID", listItem.checkOutID);
+                            _Command.Parameters.AddWithValue("@supplierID", listItem.supplierID);
+                            
+                            // open the connection
+                            _Connection.Open();
 
-                        //Execute the command
-                        _Command.ExecuteNonQuery();
+                            //Execute the command
+                            _Command.ExecuteNonQuery();
 
-                        // change the status of the bool
-                        success = true;
+                            // change the status of the bool
+                            success = true;
 
-                        // close the connection
-                        _Connection.Close();
+                            // close the connection
+                            _Connection.Close();
+                        }
                     }
                 }
-
             }
             //pass the error message
             catch (Exception error)
@@ -257,15 +255,14 @@ namespace DAL
                 // call the error method and pass the error
                 ErrorMessage.logger(error);
             }
-            // return the success
-            return success;
+            
         }
 
-        public List<CartDAO> ViewTransactions()
+        public List<CartDAO> ViewTransactions(int userTableID)
         {
             // create a new instance of productDOA that is a list
             List<CartDAO> itemList = new List<CartDAO>();
-
+            
             // create try catch to catch any possible errors
             try
             {
@@ -277,6 +274,7 @@ namespace DAL
                     {
                         // specify the command is a stored procedure
                         _Command.CommandType = System.Data.CommandType.StoredProcedure;
+                        _Command.Parameters.AddWithValue("@userTableID", userTableID);
                         // open the connection
                         _Connection.Open();
 
@@ -297,14 +295,15 @@ namespace DAL
                                 itemToList.productDescription = (String)_Reader["productDescription"];
                                 itemToList.productPrice = Convert.ToDecimal(_Reader["productPrice"]);
                                 itemToList.checkOutQuantity = Convert.ToInt32(_Reader["checkOutQuantity"]);
-                                itemToList.checkOutShipping = Convert.ToDecimal(_Reader["checkOutShipping"]);
-                                itemToList.checkOutTotal = Convert.ToDecimal(_Reader["checkOutTotal"]);
+                                itemToList.checkOutShipping = 10.00M;
+                                //itemToList.checkOutTotal = Convert.ToDecimal(_Reader["checkOutTotal"]);
                                 itemList.Add(itemToList);
 
                             }
                         }
                         //close the connection
                         _Connection.Close();
+                        //DeleteCart(userTableID);
                     }
                 }
             }
@@ -317,6 +316,47 @@ namespace DAL
             }
             // return the list
             return itemList;
+        }
+
+        public bool DeleteCart(int userTableID)
+        {
+            bool success = false;
+            // create try catch to catch any possible errors
+            try
+            {
+                // create a using statment to use the connection string
+                using (SqlConnection _Connection = new SqlConnection(connectionString))
+                {
+                    // create using statment to specify the stored procedure
+                    using (SqlCommand _Command = new SqlCommand("sp_CheckOutDeleteCart", _Connection))
+                    {
+                        // specify the command is a stored procedure
+                        _Command.CommandType = System.Data.CommandType.StoredProcedure;
+                        // pass the ID of the product to delete
+                        _Command.Parameters.AddWithValue("userTableID", userTableID);
+                        // open the connection
+                        _Connection.Open();
+                        // execute the command/stored procedure
+                        _Command.ExecuteNonQuery();
+
+                        //change the bool to true
+                        success = true;
+
+                        //close the connection
+                        _Connection.Close();
+
+                    }
+                }
+            }
+            //pass the error message
+            catch (Exception error)
+            {
+                // call the error method and pass the error
+                ErrorMessage.logger(error);
+            }
+            // return the success
+            return success;
+
         }
     }
 }

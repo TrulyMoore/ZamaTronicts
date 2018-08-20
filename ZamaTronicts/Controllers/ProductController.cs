@@ -13,21 +13,29 @@ namespace ZamaTronicts.Controllers
         // instaniate a new instance of the mapper and productDataAccess
         static Mapper _mapper = new Mapper();
         static ProductDataAccess _productDataAccess = new ProductDataAccess();
+        static SupplierDataAccess _supplierDataAccess = new SupplierDataAccess();
 
         // create the get/post methods to create a product
         [HttpGet]
         public ActionResult CreateProduct()
         {
-            // create a new instance of the viewModel
-            ProductViewModel productViewModel = new ProductViewModel();
+            if ((string)Session["roleName"] == "admin" || (string)Session["roleName"] == "moderator")
+            {
+                DropDown();
+                // create a new instance of the viewModel
+                ProductViewModel productViewModel = new ProductViewModel();
 
-            // return the view and pass an instance of singleProduct
-            return View(productViewModel.singleProductPO);
+                // return the view and pass an instance of singleProduct
+                return View(productViewModel.singleProductPO);
+            }
+            return RedirectToAction("ViewProducts");
         }
 
         [HttpPost]
         public ActionResult CreateProduct(ProductPO productToMap)
         {
+            DropDown();
+           
             // pass the elements of the product to the map through the method call and then to the DAL
             _productDataAccess.AddProduct(_mapper.Map(productToMap));
 
@@ -39,15 +47,19 @@ namespace ZamaTronicts.Controllers
         [HttpGet]
         public ActionResult UpdateProduct(int productID)
         {
-            // create a new instance of the productViewModel
-            ProductViewModel _productViewModel = new ProductViewModel();
+            if ((string)Session["roleName"] == "admin" || (string)Session["roleName"] == "moderator")
+            {
+                // create a new instance of the productViewModel
+                ProductViewModel _productViewModel = new ProductViewModel();
 
-            // pass the product ID to the view method and pass to the product dataAccess 
-            //through the mapper then to the single product
-            _productViewModel.singleProductPO = _mapper.Map(_productDataAccess.ViewOneProduct(productID));
+                // pass the product ID to the view method and pass to the product dataAccess 
+                //through the mapper then to the single product
+                _productViewModel.singleProductPO = _mapper.Map(_productDataAccess.ViewOneProduct(productID));
 
-            // return the view with productview.singleproduct
-            return View(_productViewModel.singleProductPO);
+                // return the view with productview.singleproduct
+                return View(_productViewModel.singleProductPO);
+            }
+            return RedirectToAction("ViewProducts");
         }
 
         [HttpPost]
@@ -66,9 +78,9 @@ namespace ZamaTronicts.Controllers
         {
             // create a new instance of productViewModel
             ProductViewModel _productViewModel = new ProductViewModel();
+
             _productViewModel.userTableID = (int)Session["userTableID"];
-            // call the view products method pass it through the dataAccess and mapper
-            // then set it to the product list
+           
             _productViewModel.listProductPO = _mapper.Map(_productDataAccess.ViewAllProducts());
            
             // return the view
@@ -79,11 +91,27 @@ namespace ZamaTronicts.Controllers
         [HttpGet]
         public ActionResult DeleteProduct(int productID)
         {
-            // pass the id to the method then to the DAL
-            _productDataAccess.DeleteProduct(productID);
+            if ((string)Session["roleName"] == "admin")
+            {
+                // pass the id to the method then to the DAL
+                _productDataAccess.DeleteProduct(productID);
+            }
 
             // return the view products page
             return RedirectToAction("ViewProducts");
         }
+
+
+        [HttpGet]
+        private void DropDown()
+        {
+            ViewBag.ListSuppliers = new List<SelectListItem>();
+            List<SupplierPO> supplier = _mapper.Map(_supplierDataAccess.ViewAllSuppliers());
+            foreach (SupplierPO suppliers in supplier)
+            {
+                ViewBag.ListSuppliers.Add(new SelectListItem { Text = suppliers.supplierName, Value = suppliers.supplierID.ToString() });
+            }
+        }
+      
     }
 }

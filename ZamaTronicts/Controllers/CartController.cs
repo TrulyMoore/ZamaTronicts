@@ -27,7 +27,7 @@ namespace ZamaTronicts.Controllers
            ProductPO productInfo = _mapper.Map(_productDataAccess.ViewOneProduct(productID));
 
            CartPO _CheckOut = new CartPO();
-            _CheckOut.checkOutTotal = productInfo.productPrice;
+            //_CheckOut.checkOutTotal = productInfo.productPrice;
             _CheckOut.productID = productID;
             _CheckOut.userTableID = (int)Session["userTableID"];
             _CheckOut.checkOutQuantity = 1;
@@ -52,16 +52,28 @@ namespace ZamaTronicts.Controllers
 
             finalTotal = _cartBusinessLogic.GetFinalTotal(_mapper.GetProductInfoList(_cartViewModel.listOfItemsPO));
             _cartViewModel.finalTotal = finalTotal;
+            _cartViewModel._userTableID = userTableID;
 
             foreach (CartPO singleItem in _cartViewModel.listOfItemsPO)
             {
                 itemTotal = _cartBusinessLogic.GetProductTotal(_mapper.GetProductInfo(singleItem));
-                singleItem.finalTotal = itemTotal;
+                singleItem.total = itemTotal;
 
             }
 
             // return the view
             return View(_cartViewModel);
+        }
+        
+        [HttpPost]
+        public ActionResult UpdateItemQuantity(CartPO item)
+        {
+
+            // pass the id to the method then to the DAL
+            _cartDataAccess.UpdateItemQuantity(item.checkOutID, item.checkOutQuantity);
+
+            // return the view cart page
+            return RedirectToAction("ViewCart","Cart", new { userTableID = item.userTableID });
         }
 
         [HttpGet]
@@ -73,44 +85,19 @@ namespace ZamaTronicts.Controllers
               return RedirectToAction("ViewCart",new {userTableID = userTableID} );
         }
 
-        [HttpPost]
-        public ActionResult UpdateItemQuantity(CartPO item)
-        {
-            // pass the id to the method then to the DAL
-            _cartDataAccess.UpdateItemQuantity(item.checkOutID, item.checkOutQuantity);
-
-            // return the view cart page
-            return RedirectToAction("ViewCart","Cart", new { userTableID = item.userTableID });
-        }
 
         [HttpGet]
-        public ActionResult CreateTransactions(int userTableID)
+        public ActionResult ViewTransactions(int userTableID)
         {
-            CartPO transactionInfo = _mapper.Map(_cartDataAccess.ViewOneProduct(userTableID));
-            CartPO _transaction = new CartPO();
-            _transaction.userTransactionID = transactionInfo.productPrice;
-            _CheckOut.productID = productID;
+            List<CartPO> cartInfo  = _mapper.Map(_cartDataAccess.ViewCart(userTableID));
+            _cartDataAccess.CreateTransaction(_mapper.Map(cartInfo));
 
 
-            return RedirectToAction("ViewTransactions","Cart");
-        }
-
-
-        [HttpGet]
-        public ActionResult ViewTransactions()
-        {
-            //create a new instance of userViewModels
-            CartViewModel _cartViewModel = new CartViewModel();
-
-            // call the method and pass through the DAL to the mapper then pass to the user list
-            _cartViewModel.listOfItemsPO = _mapper.Map(_cartDataAccess.ViewTransactions());
-
-            // return the viewModel
-
-            return View(_cartViewModel);
-
-
-        }
+            List<CartPO> _Transaction = _mapper.Map(_cartDataAccess.ViewTransactions(userTableID));
+           // _cartDataAccess.DeleteCart(userTableID);
+        
+            return View(_Transaction);
+        }      
 
     }
 }

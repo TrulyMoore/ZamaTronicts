@@ -38,6 +38,7 @@ namespace DAL
                         _Command.CommandType = System.Data.CommandType.StoredProcedure;
 
                         // pass the info to the stored procedure
+                        _Command.Parameters.AddWithValue("@supplierID", productToAdd.supplierID);
                         _Command.Parameters.AddWithValue("@productDescription", productToAdd.productDescription);
                         _Command.Parameters.AddWithValue("@productProcessor", productToAdd.productProcessor);
                         _Command.Parameters.AddWithValue("@productOperatingSystem", productToAdd.productOperatingSystem);
@@ -84,6 +85,7 @@ namespace DAL
                     {
                         // specify the command is a stored procedure
                         _Command.CommandType = System.Data.CommandType.StoredProcedure;
+                        _Command.Parameters.AddWithValue("@productID", productToUpdate.productID);
                         // pass the info to the stored procedure
                         _Command.Parameters.AddWithValue("@productDescription", productToUpdate.productDescription);
                         _Command.Parameters.AddWithValue("@productProcessor", productToUpdate.productProcessor);
@@ -189,13 +191,14 @@ namespace DAL
                                 // create a new instance of ProductDOA to retrieve each item
                                 ProductDAO productToList = new ProductDAO();
                                 // get the product elements
+                                productToList.supplierName = (string)(_Reader["supplierName"]);
                                 productToList.productID = Convert.ToInt32(_Reader["productID"]);
                                 productToList.productDescription = (String)_Reader["productDescription"];
                                 productToList.productProcessor = (String)_Reader["productProcessor"];
                                 productToList.productOperatingSystem = (String)_Reader["productOperatingSystem"];
                                 productToList.productQuantity = Convert.ToInt32(_Reader["productQuantity"]);
                                 productToList.productRam = (String)_Reader["productRam"];
-                                productToList.productPrice = Convert.ToDecimal(_Reader["productPrice"]);
+                                productToList.productPrice = Convert.ToDouble(_Reader["productPrice"]);
 
                                 // return the info in a complete list
                                 productList.Add(productToList);
@@ -253,7 +256,7 @@ namespace DAL
                                 _Product.productOperatingSystem = (String)_Reader["productOperatingSystem"];
                                 _Product.productQuantity = Convert.ToInt32(_Reader["productQuantity"]);
                                 _Product.productRam = (String)_Reader["productRam"];
-                                _Product.productPrice = Convert.ToDecimal(_Reader["productPrice"]);
+                                _Product.productPrice = Convert.ToDouble(_Reader["productPrice"]);
                             }
                         }
  

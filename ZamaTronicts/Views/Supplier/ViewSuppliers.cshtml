@@ -60,12 +60,19 @@
             @Html.DisplayFor(modelItem => item.supplierPhoneNumber)
         </td>
         <td>
-            @Html.ActionLink("Update", "UpdateSupplier", new { supplierID = item.supplierID })
-        </td>
+            @if ((string)Session["roleName"] == "admin" || (string)Session["roleName"] == "moderator")
+            {
+                @Html.ActionLink("Update", "UpdateSupplier", new { supplierID = item.supplierID })
+            }
+            </td>
         <td>
-            @Html.ActionLink("Delete", "DeleteSupplier", new { supplierID = item.supplierID })
+            @if ((string)Session["roleName"] == "admin")
+            {
+                @Html.ActionLink("Delete", "DeleteSupplier", new { supplierID = item.supplierID })
+            }
+            </td>
 
-    </tr>
+</tr>
 }
 
 </table>
