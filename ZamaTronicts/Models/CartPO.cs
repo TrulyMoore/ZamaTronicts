@@ -23,6 +23,7 @@ namespace ZamaTronicts.Models
         public DateTime datePurchase { get; set; }
         [Display(Name = "Tax")]
         public decimal checkOutTax { get; set; }
+        [Display(Name ="Shipping")]
         public decimal checkOutShipping { get; set; }
         [Display(Name = "Price")]
         public decimal checkOutTotal { get; set; }

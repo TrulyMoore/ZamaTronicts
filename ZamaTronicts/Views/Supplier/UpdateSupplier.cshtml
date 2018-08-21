@@ -5,7 +5,19 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>UpdateSupplier</h2>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Home", "ViewProducts", "Product", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+    </div>
+</div>
+<h2>Update A ZamaTronicts Supplier</h2>
 
 
 @using (Html.BeginForm())

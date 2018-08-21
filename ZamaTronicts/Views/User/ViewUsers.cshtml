@@ -3,8 +3,20 @@
 @{
     ViewBag.Title = "ViewUsers";
 }
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Home", "ViewProducts", "Product", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+    </div>
+</div>
 
-<h2>ViewUsers</h2>
+<h2>ZamaTronicts Users</h2>
 
 
 <table class="table">
@@ -47,10 +59,10 @@
 @foreach (var item in Model.listUserPO) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.userTableID)
+            @Html.HiddenFor(modelItem => item.userTableID)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.accountInfoID)
+            @Html.HiddenFor(modelItem => item.accountInfoID)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.accountFirstName)

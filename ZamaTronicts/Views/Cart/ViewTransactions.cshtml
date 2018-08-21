@@ -5,13 +5,25 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>ViewTransactions</h2>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Home", "ViewProducts", "Product", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+    </div>
+</div>
+<h2>View Your ZamaTronict Transactions</h2>
 
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayFor(model => model[0].supplierID)
+            @Html.DisplayFor(model => model[1].supplierID)
         </th>
         <th>
             @Html.DisplayNameFor(model => model[0].supplierName)
@@ -46,7 +58,7 @@
             @Html.HiddenFor(model => model[0].productID)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model[0].finalTotal)
+            @Html.DisplayNameFor(model => model[0].total)
         </th>
         <th></th>
     </tr>
@@ -89,7 +101,7 @@
             @Html.HiddenFor(modelItem => item.productID)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.finalTotal)
+            @Html.DisplayFor(modelItem => item.total)
         </td>
        
     </tr>
