@@ -48,7 +48,7 @@ namespace DAL
                         _Command.Parameters.AddWithValue("@accountZip", userToCreate.accountZip);
                         _Command.Parameters.AddWithValue("@userName", userToCreate.userName);
                         _Command.Parameters.AddWithValue("@userPassword", userToCreate.userPassword);
-                       // _Command.Parameters.AddWithValue("@userRole", userToCreate.userRole);
+                        _Command.Parameters.AddWithValue("@userRole", userToCreate.userRole);
                         // open the connection
                         _Connection.Open();
                         // execute the command/stored procedure
@@ -210,6 +210,7 @@ namespace DAL
                                 userToList.accountCity = (string)_Reader["accountCity"];
                                 userToList.accountState = (string)_Reader["accountState"];
                                 userToList.accountZip = Convert.ToInt32(_Reader["accountZip"]);
+                                userToList.roleName = (string)_Reader["roleName"];
                                 _UserList.Add(userToList);
                             }
                         }
@@ -230,7 +231,7 @@ namespace DAL
         }
 
         // create a method to view only one user
-        public UserDAO ViewOneUser(int userID, int accountInfoID)
+        public UserDAO ViewOneUser(int userID)
         {
             // create a new instance of userDOA
             UserDAO _User = new UserDAO();
@@ -248,7 +249,8 @@ namespace DAL
                         // specify the command is a stored procedure
                         _Command.CommandType = System.Data.CommandType.StoredProcedure;
                         _Command.Parameters.AddWithValue("@userTableID", userID);
-                        _Command.Parameters.AddWithValue("@accountInfoID", accountInfoID);
+                     
+
                         // open the connection
                         _Connection.Open();
 
@@ -272,6 +274,7 @@ namespace DAL
                                 _User.roleName = (string) _Reader["roleName"];
                                 _User.userName = (string)_Reader["userName"];
                                 _User.userPassword = (string)_Reader["userPassword"];
+                                _User.userRole = Convert.ToInt32(_Reader["userRole"]);
                             }
                         }
                     }
@@ -306,6 +309,7 @@ namespace DAL
                         // specify the command is a stored procedure
                         _Command.CommandType = System.Data.CommandType.StoredProcedure;
                         _Command.Parameters.AddWithValue("@userName", _UserLogin.userName);
+                     
                         // open the connection
                         _Connection.Open();
                         // create a using statement using the reader to reader through the list
@@ -314,6 +318,7 @@ namespace DAL
                             // create a while loop to read throught the whole record
                             while (_Reader.Read())
                             {
+                                
                                 _User.userTableID = Convert.ToInt32(_Reader["userTableID"]);
                                 _User.userName = (string)_Reader["userName"];
                                 _User.userPassword = (string)_Reader["userPassword"];

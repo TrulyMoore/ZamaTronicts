@@ -198,7 +198,7 @@ namespace DAL
                                 productToList.productOperatingSystem = (String)_Reader["productOperatingSystem"];
                                 productToList.productQuantity = Convert.ToInt32(_Reader["productQuantity"]);
                                 productToList.productRam = (String)_Reader["productRam"];
-                                productToList.productPrice = Convert.ToDouble(_Reader["productPrice"]);
+                                productToList.productPrice = Convert.ToDecimal(_Reader["productPrice"]);
 
                                 // return the info in a complete list
                                 productList.Add(productToList);
@@ -256,7 +256,9 @@ namespace DAL
                                 _Product.productOperatingSystem = (String)_Reader["productOperatingSystem"];
                                 _Product.productQuantity = Convert.ToInt32(_Reader["productQuantity"]);
                                 _Product.productRam = (String)_Reader["productRam"];
-                                _Product.productPrice = Convert.ToDouble(_Reader["productPrice"]);
+                                _Product.productPrice = Convert.ToDecimal(_Reader["productPrice"]);
+                                _Product.supplierID = Convert.ToInt32(_Reader["supplierID"]);
+                                _Product.supplierName = (string)_Reader["supplierName"];
                             }
                         }
  

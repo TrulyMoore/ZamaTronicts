@@ -34,5 +34,6 @@ namespace ZamaTronicts.Models
         [Range(0,100)]
         [Display(Name = "Quantity")]
         public int checkOutQuantity { get; set; }
+        public int productQuantity { get; set; }
     }
 }

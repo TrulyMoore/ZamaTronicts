@@ -33,6 +33,7 @@ namespace ZamaTronicts.Models
                 productToView.productQuantity = productToMap.productQuantity;
                 productToView.productRam = productToMap.productRam;
                 productToView.productPrice = productToMap.productPrice;
+              
                 productListToReturn.Add(productToView);
             }
             // return the finally list of all products
@@ -56,6 +57,7 @@ namespace ZamaTronicts.Models
             productToView.productQuantity = productToMap.productQuantity;
             productToView.productRam = productToMap.productRam;
             productToView.productPrice = productToMap.productPrice;
+           
 
             // return the product
             return productToView;
@@ -78,6 +80,7 @@ namespace ZamaTronicts.Models
             productToView.productQuantity = productToMap.productQuantity;
             productToView.productRam = productToMap.productRam;
             productToView.productPrice = productToMap.productPrice;
+        
 
             // return the product
             return productToView;

@@ -8,6 +8,9 @@ namespace ZamaTronicts.Models
 {
     public class ProductPO
     {
+
+        
+
         public int productID { get; set; }
         public int userID { get; set; }
         [Display(Name = "Product Description")]
@@ -21,11 +24,13 @@ namespace ZamaTronicts.Models
         [Display(Name = "Ram")]
         public String productRam { get; set; }
         [Display(Name = "Price")]
-        public double productPrice { get; set; }
+        public decimal productPrice { get; set; }
         public int supplierID { get; set; }
         [Display(Name ="Supplier")]
         public string supplierName { get; set; }
         public SupplierPO supplier { get; set; }
+        public string roleName { get; set; }
+        public int userRole { get; set; }
 
     }
 }

@@ -5,86 +5,91 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <body>
-<div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
 
-        @if ((string)Session["roleName"] == "admin" || (string)Session["roleName"] == "moderator")
-        {
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <div class="dropdown">
-                    <ul class=" nav narbar-nav">
-                        <li class=" dropdown">
-                            <a href="#" data-toggle="dropdown" class=" dropdown-toggle">
-                                Product<span class=" caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li class=" active"> @Html.ActionLink("Add A Product", "CreateProduct", "Product")</li>
+            @if ((string)Session["roleName"] == "admin" || (string)Session["roleName"] == "moderator")
+            {
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <div class="dropdown">
+                        <ul class=" nav narbar-nav">
+                            <li class=" dropdown">
+                                <a href="#" data-toggle="dropdown" class=" dropdown-toggle">
+                                    Product<span class=" caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class=" active"> @Html.ActionLink("Add A Product", "CreateProduct", "Product")</li>
+                    </div>
                 </div>
-            </div>
-        }
-        @if ((string)Session["roleName"] == "admin" || (string)Session["roleName"] == "moderator")
-        {
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <div class="dropdown">
-                    <ul class=" nav narbar-nav">
-                        <li class=" dropdown">
-                            <a href="#" data-toggle="dropdown" class=" dropdown-toggle">
-                                Suppliers<span class=" caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li class=" active"> @Html.ActionLink("View all of the Suppliers", "ViewSuppliers", "Supplier")</li>
-                                <li class=" active"> @Html.ActionLink("Add a Supplier", "CreateSupplier", "Supplier")</li>
+            }
+            @if ((string)Session["roleName"] == "admin" || (string)Session["roleName"] == "moderator")
+            {
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <div class="dropdown">
+                        <ul class=" nav narbar-nav">
+                            <li class=" dropdown">
+                                <a href="#" data-toggle="dropdown" class=" dropdown-toggle">
+                                    Suppliers<span class=" caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class=" active"> @Html.ActionLink("View all of the Suppliers", "ViewSuppliers", "Supplier")</li>
+                                    <li class=" active"> @Html.ActionLink("Add a Supplier", "CreateSupplier", "Supplier")</li>
+                    </div>
                 </div>
-            </div>
-        }
+            }
 
-        @if ((string)Session["roleName"] == "admin" || (string)Session["roleName"] == "moderator")
-        {
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <div class="dropdown">
-                    <ul class=" nav narbar-nav">
-                        <li class=" dropdown">
-                            <a href="#" data-toggle="dropdown" class=" dropdown-toggle">
-                                Users<span class=" caret"></span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li class=" active"> @Html.ActionLink("View all of the Users", "ViewUsers", "User")</li>
-                                <li class=" active"> @Html.ActionLink("Add a User", "CreateUser", "User")</li>
+            @if ((string)Session["roleName"] == "admin" || (string)Session["roleName"] == "moderator")
+            {
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <div class="dropdown">
+                        <ul class=" nav narbar-nav">
+                            <li class=" dropdown">
+                                <a href="#" data-toggle="dropdown" class=" dropdown-toggle">
+                                    Users<span class=" caret"></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class=" active"> @Html.ActionLink("View all of the Users", "ViewUsers", "User")</li>
+                                    <li class=" active"> @Html.ActionLink("Add a User", "CreateUser", "User")</li>
+                                </ul>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        }
+            }
 
-        
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @if ((string)Session["roleName"] == "customer")
-                {
-                    @Html.ActionLink("View Cart", "ViewCart", "Cart", new { userTableID = Model.userTableID }, new { @class = " nav narbar-nav caret" })
-                }
-           
 
-        </div>
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @if ((string)Session["roleName"] == "customer")
+                    {
+                        @Html.ActionLink("View Cart", "ViewCart", "Cart", new { userTableID = Model.userTableID }, new { @class = " nav narbar-nav", @style = "padding: 3px" })
+                        @Html.ActionLink("Update", "UpdateUser", "User", new { userTableID = (int)Session["userTableID"] }, new{ @class = " nav narbar-nav", @style = "padding: 3px"})
+                    }
 
-      
+
+                </div>
+
+
+
+
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
@@ -93,63 +98,61 @@
                 </button>
                 @if ((string)Session["roleName"] == null)
                 {
-                    @Html.ActionLink("Login", "Login", "User", new { area = "" }, new { @class = " nav narbar-nav caret" })
+                    @Html.ActionLink("Login", "Login", "User", new { area = "" }, new { @class = " nav narbar-nav", @style = "padding: 3px" })
                 }
                 @if ((string)Session["roleName"] != null)
                 {
-                    @Html.ActionLink("Logout", "Logout", "User", new { area = "" }, new { @class = " nav narbar-nav caret" })
+                    @Html.ActionLink("Logout", "Logout", "User", new { area = "" }, new { @class = " nav narbar-nav", @style = "padding: 3px" })
 
                 }
-            
+
+            </div>
         </div>
     </div>
-    </div>
 
-    
-            <h2> ZamaTronicts Products</h2>
 
-        <table class="table">
+    <h2> ZamaTronict Products</h2>
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.singleProductPO.supplierName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.singleProductPO.productDescription)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.singleProductPO.productProcessor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.singleProductPO.productOperatingSystem)
+            </th>
+
+            <th>
+                @if ((string)Session["roleName"] == "admin" || (string)Session["roleName"] == "moderator")
+                {
+                    @Html.DisplayNameFor(model => model.singleProductPO.productQuantity)
+                }
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.singleProductPO.productRam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.singleProductPO.productPrice)
+            </th>
+
+        </tr>
+
+        @foreach (var item in Model.listProductPO)
+        {
             <tr>
-                <th>
 
-                </th>
-                <th>
+                @Html.HiddenFor(modelItem => Model.userTableID)
 
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.singleProductPO.supplierName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.singleProductPO.productDescription)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.singleProductPO.productProcessor)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.singleProductPO.productOperatingSystem)
-                </th>
-                <th>
+                @Html.HiddenFor(modelItem => item.productID)
 
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.singleProductPO.productRam)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.singleProductPO.productPrice)
-                </th>
+                @Html.HiddenFor(modelItem => item.supplierID)
 
-                <th></th>
-            </tr>
-
-            @foreach (var item in Model.listProductPO)
-            {
-            <tr>
-                <td>
-                    @Html.HiddenFor(modelItem => Model.userTableID)
-                </td>
-                <td>
-                    @Html.HiddenFor(modelItem => item.productID)
-                </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.supplierName)
                 </td>
@@ -163,14 +166,17 @@
                     @Html.DisplayFor(modelItem => item.productOperatingSystem)
                 </td>
                 <td>
-                    @Html.HiddenFor(modelItem => item.productQuantity)
+                    @if ((string)Session["roleName"] == "admin" || (string)Session["roleName"] == "moderator")
+                    {
+                        @Html.DisplayFor(modelItem => item.productQuantity)
+                    }
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.productRam)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.productPrice)
-                 </td>
+                </td>
                 <td>
                     @if ((string)Session["roleName"] == "admin" || (string)Session["roleName"] == "moderator")
                     {
@@ -190,10 +196,12 @@
                     {
                         @Html.ActionLink("Add to Cart", "AddToCart", "Cart", new { productID = item.productID }, new { @class = "" })
                     }
-                    </td>
+                </td>
+
 
             </tr>
-            }
+        }
 
-        </table>
+    </table>
+  
 </body>

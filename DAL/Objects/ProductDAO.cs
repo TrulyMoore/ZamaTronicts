@@ -16,8 +16,10 @@ namespace DAL.Objects
         public String productOperatingSystem { get; set; }
         public int productQuantity { get; set; }
         public String productRam { get; set; }
-        public double productPrice { get; set; }
+        public decimal productPrice { get; set; }
         public int supplierID { get; set; }
         public String supplierName { get; set; }
+        public string roleName { get; set; }
+        public int userRole { get; set; }
     }
 }

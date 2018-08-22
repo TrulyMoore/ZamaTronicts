@@ -15,6 +15,7 @@ namespace ZamaTronicts.Models
         [Display(Name = " Item Total")]
         public decimal itemTotal { get; set; }
         public int _userTableID { get; set; }
+        public decimal shipping { get; set; } = 10.00M;
         public CartViewModel()
         {
 

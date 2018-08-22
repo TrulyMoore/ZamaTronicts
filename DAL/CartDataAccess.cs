@@ -44,6 +44,7 @@ namespace DAL
                         _Command.Parameters.AddWithValue("@checkOutShipping", cartToCreate.checkOutShipping);
                         _Command.Parameters.AddWithValue("@checkOutTotal", cartToCreate.checkOutTotal);
                         _Command.Parameters.AddWithValue("@checkOutDate", cartToCreate.checkOutDate);
+                        _Command.Parameters.AddWithValue("@supplierID", cartToCreate.supplierID);
 
                         // open the connection
                         _Connection.Open();
@@ -270,7 +271,7 @@ namespace DAL
                 using (SqlConnection _Connection = new SqlConnection(connectionString))
                 {
                     // create using statment to specify the stored procedure
-                    using (SqlCommand _Command = new SqlCommand("sp_UserTransaction", _Connection))
+                    using (SqlCommand _Command = new SqlCommand("sp_UserTransactionViewAllTransactions ", _Connection))
                     {
                         // specify the command is a stored procedure
                         _Command.CommandType = System.Data.CommandType.StoredProcedure;

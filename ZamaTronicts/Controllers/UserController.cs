@@ -21,7 +21,7 @@ namespace ZamaTronicts.Controllers
         {
             // create a new instance  of userModel
             UserPO _userModel = new UserPO();
-
+            _userModel.userRole = 1;
             // return the userModel and view
             return View(_userModel);
         }
@@ -30,24 +30,25 @@ namespace ZamaTronicts.Controllers
         public ActionResult CreateUser(UserPO userModel)
         {
             // pass the user model through the mapper to the method
-            userModel.userRole = 1;
+           
             _userDataAccess.CreateUser(_mapper.Map(userModel));
-
             // return to the login page
             return RedirectToAction("Login");
         }
 
         // create the get/post update methods to update the user info
         [HttpGet]
-        public ActionResult UpdateUser(int userTableID, int accountInfoID)
+        public ActionResult UpdateUser(int userTableID)
         {
             DropDown();
             // instaniate a new usermodel
             UserViewModel _userModel = new UserViewModel();
 
+     
+
             // pass the userID to the view method through the DAL
             // then pass through the mapper and set to the single user
-            _userModel.singleUserPO = _mapper.Map(_userDataAccess.ViewOneUser(userTableID, accountInfoID));
+            _userModel.singleUserPO = _mapper.Map(_userDataAccess.ViewOneUser(userTableID));
 
             //return the view with the single user
             return View(_userModel.singleUserPO);
@@ -56,12 +57,21 @@ namespace ZamaTronicts.Controllers
         [HttpPost]
         public ActionResult UpdateUser(UserPO userToMap)
         {
-           
+            
+            //userToMap.roleName = (string)Session["roleName"];
+            //userToMap.userRole = (int)Session["userRole"];
+
+
             // pass the user through the mapper to the method in the DAL
             _userDataAccess.UpdateUser(_mapper.Map(userToMap));
+            if ((string)Session["roleName"] == "customer")
+            {
+                return RedirectToAction("ViewProducts", "Product");
+            }
+                // return to a list of users
 
-            // return to a list of users
-            return RedirectToAction("ViewUsers");
+
+                return RedirectToAction("ViewUsers");
         }
 
         // create a get method to view all of the users
@@ -127,9 +137,7 @@ namespace ZamaTronicts.Controllers
                 }
 
             }
-            // string error = ViewContext.ViewData.ModelState;
-            // ViewBag.errorMessage = error; 
-            // var errors = ModelState.Values.SelectMany(v => v.Errors);
+           
 
             return RedirectToAction("ViewProducts", "Product");
 

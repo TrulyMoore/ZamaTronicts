@@ -27,8 +27,10 @@ namespace ZamaTronicts.Controllers
            ProductPO productInfo = _mapper.Map(_productDataAccess.ViewOneProduct(productID));
 
            CartPO _CheckOut = new CartPO();
-            //_CheckOut.checkOutTotal = productInfo.productPrice;
+            _CheckOut.checkOutTotal = productInfo.productPrice;
             _CheckOut.productID = productID;
+            _CheckOut.supplierID = productInfo.supplierID;
+            _CheckOut.supplierName = productInfo.supplierName;
             _CheckOut.userTableID = (int)Session["userTableID"];
             _CheckOut.checkOutQuantity = 1;
             _CheckOut.checkOutTax = 0.04M;
@@ -68,10 +70,16 @@ namespace ZamaTronicts.Controllers
         [HttpPost]
         public ActionResult UpdateItemQuantity(CartPO item)
         {
-
-            // pass the id to the method then to the DAL
-            _cartDataAccess.UpdateItemQuantity(item.checkOutID, item.checkOutQuantity);
-
+            //if (item.checkOutQuantity > item.productQuantity)
+            //{
+            //    ViewBag.Message = "Out of stock. Please lower the quantity";
+            //    return RedirectToAction("ViewCart", "Cart", new { userTableID = item.userTableID });
+            //}
+            //else
+            //{
+                // pass the id to the method then to the DAL
+                _cartDataAccess.UpdateItemQuantity(item.checkOutID, item.checkOutQuantity);
+            //}
             // return the view cart page
             return RedirectToAction("ViewCart","Cart", new { userTableID = item.userTableID });
         }
@@ -94,7 +102,7 @@ namespace ZamaTronicts.Controllers
 
 
             List<CartPO> _Transaction = _mapper.Map(_cartDataAccess.ViewTransactions(userTableID));
-           // _cartDataAccess.DeleteCart(userTableID);
+          
         
             return View(_Transaction);
         }      
