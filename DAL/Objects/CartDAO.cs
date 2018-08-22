@@ -22,5 +22,6 @@ namespace DAL.Objects
         public int userTransactionID { get; set; }
         public DateTime datePurchase { get; set; }
         public int supplierID { get; set; }
+        public int productQuantity { get; set; }
     }  
 }

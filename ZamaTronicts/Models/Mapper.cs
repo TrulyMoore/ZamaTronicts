@@ -279,6 +279,7 @@ namespace ZamaTronicts.Models
             cartToView.productID = cartToMap.productID;
             cartToView.userTransactionID = cartToMap.userTransactionID;
             cartToView.datePurchase = cartToMap.datePurchase;
+            cartToView.productQuantity = cartToMap.productQuantity;
             
             return cartToView;
 
@@ -302,6 +303,7 @@ namespace ZamaTronicts.Models
             cartToView.productID = cartToMap.productID;
             cartToView.userTransactionID = cartToMap.userTransactionID;
             cartToView.datePurchase = cartToMap.datePurchase;
+            cartToView.productQuantity = cartToMap.productQuantity;
             return cartToView;
         }
 
@@ -330,6 +332,7 @@ namespace ZamaTronicts.Models
                 cartToView.productID = cartToMap.productID;
                 cartToView.userTransactionID = cartToMap.userTransactionID;
                 cartToView.datePurchase = cartToMap.datePurchase;
+                cartToView.productQuantity = cartToMap.productQuantity;
                 cartListToReturn.Add(cartToView);
 
             }
@@ -387,6 +390,7 @@ namespace ZamaTronicts.Models
                 cartToView.productID = cartToMap.productID;
                 cartToView.userTransactionID = cartToMap.userTransactionID;
                 cartToView.datePurchase = cartToMap.datePurchase;
+                cartToView.productQuantity = cartToMap.productQuantity;
                 cartListToReturn.Add(cartToView);
 
             }

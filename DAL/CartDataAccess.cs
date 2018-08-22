@@ -109,6 +109,7 @@ namespace DAL
                                 _cartToList.checkOutTotal = Convert.ToDecimal(_Reader["checkOutTotal"]);
                                 _cartToList.userTableID = Convert.ToInt32(_Reader["userTableID"]);
                                 _cartToList.productID = Convert.ToInt32(_Reader["productID"]);
+                                _cartToList.productQuantity = Convert.ToInt32(_Reader["productQuantity"]);
                                 cartList.Add(_cartToList);
                             }
                         }
@@ -166,7 +167,7 @@ namespace DAL
 
         }
 
-        public bool UpdateItemQuantity(int checkOutID, int quantity)
+        public bool UpdateItemQuantity(int checkOutID, int quantity, int productID)
         {
             // set the bool to false
             bool success = false;
@@ -185,6 +186,8 @@ namespace DAL
                         // pass the ID of the product to delete
                         _Command.Parameters.AddWithValue("@checkOutID", checkOutID);
                         _Command.Parameters.AddWithValue("@checkOutQuantity", quantity);
+                    
+                        _Command.Parameters.AddWithValue("@productID", productID);
                         // open the connection
                         _Connection.Open();
                         // execute the command/stored procedure

@@ -29,6 +29,7 @@ namespace ZamaTronicts.Controllers
            CartPO _CheckOut = new CartPO();
             _CheckOut.checkOutTotal = productInfo.productPrice;
             _CheckOut.productID = productID;
+            _CheckOut.productQuantity = productInfo.productQuantity;
             _CheckOut.supplierID = productInfo.supplierID;
             _CheckOut.supplierName = productInfo.supplierName;
             _CheckOut.userTableID = (int)Session["userTableID"];
@@ -55,6 +56,7 @@ namespace ZamaTronicts.Controllers
             finalTotal = _cartBusinessLogic.GetFinalTotal(_mapper.GetProductInfoList(_cartViewModel.listOfItemsPO));
             _cartViewModel.finalTotal = finalTotal;
             _cartViewModel._userTableID = userTableID;
+            _cartViewModel.productQuantity = _cartViewModel.singleItemPO.productQuantity;
 
             foreach (CartPO singleItem in _cartViewModel.listOfItemsPO)
             {
@@ -70,16 +72,16 @@ namespace ZamaTronicts.Controllers
         [HttpPost]
         public ActionResult UpdateItemQuantity(CartPO item)
         {
-            //if (item.checkOutQuantity > item.productQuantity)
-            //{
-            //    ViewBag.Message = "Out of stock. Please lower the quantity";
-            //    return RedirectToAction("ViewCart", "Cart", new { userTableID = item.userTableID });
-            //}
-            //else
-            //{
-                // pass the id to the method then to the DAL
-                _cartDataAccess.UpdateItemQuantity(item.checkOutID, item.checkOutQuantity);
-            //}
+            if (item.checkOutQuantity > item.productQuantity)
+            {
+                ViewBag.Message = "Out of stock. Please lower the quantity";
+                return RedirectToAction("ViewCart", "Cart", new { userTableID = item.userTableID });
+            }
+            else
+            {
+               // pass the id to the method then to the DAL
+                _cartDataAccess.UpdateItemQuantity(item.checkOutID, item.checkOutQuantity, item.productID);
+            }
             // return the view cart page
             return RedirectToAction("ViewCart","Cart", new { userTableID = item.userTableID });
         }
