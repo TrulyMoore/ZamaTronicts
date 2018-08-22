@@ -263,8 +263,10 @@ namespace ZamaTronicts.Models
 
         public CartDAO Map(CartPO cartToMap)
         {
+            // Create an instance of the object
             CartDAO cartToView = new CartDAO();
 
+            // map the values
             cartToView.checkOutID = cartToMap.checkOutID;
             cartToView.supplierID = cartToMap.supplierID;
             cartToView.supplierName = cartToMap.supplierName;
@@ -281,14 +283,17 @@ namespace ZamaTronicts.Models
             cartToView.datePurchase = cartToMap.datePurchase;
             cartToView.productQuantity = cartToMap.productQuantity;
             
+            // return the values
             return cartToView;
 
         }
 
         public CartPO Map(CartDAO cartToMap)
         {
+            // Create an instance of the object
             CartPO cartToView = new CartPO();
 
+            // map the values
             cartToView.checkOutID = cartToMap.checkOutID;
             cartToView.supplierID = cartToMap.supplierID;
             cartToView.supplierName = cartToMap.supplierName;
@@ -304,6 +309,8 @@ namespace ZamaTronicts.Models
             cartToView.userTransactionID = cartToMap.userTransactionID;
             cartToView.datePurchase = cartToMap.datePurchase;
             cartToView.productQuantity = cartToMap.productQuantity;
+
+            // return the values
             return cartToView;
         }
 
@@ -336,32 +343,40 @@ namespace ZamaTronicts.Models
                 cartListToReturn.Add(cartToView);
 
             }
+            // return the list
             return cartListToReturn;
         }
 
 
         public CartBO GetProductInfo(CartPO infoToMap)
         {
+            // return an instance of the object
             CartBO infoToView = new CartBO();
 
+            // map the info
             infoToView.checkOutQuantity = infoToMap.checkOutQuantity;
             infoToView.checkOutTax = infoToMap.checkOutTax;
             infoToView.checkOutShipping = infoToMap.checkOutShipping;
             infoToView.checkOutTotal = infoToMap.checkOutTotal;
 
+            // return the info
             return infoToView;
         }
 
         public List<CartBO> GetProductInfoList(List<CartPO> infoToMapList)
         {
+            // create an instance of the object list
             List<CartBO> cartBOList = new List<CartBO>();
+
+            // create a foreach loop to map through each object
             foreach(CartPO singleCartToMap in infoToMapList)
             {
-               
                 CartBO singleProductBO =  GetProductInfo(singleCartToMap);
+
+                // add the info to the list
                 cartBOList.Add(singleProductBO);
             }
-
+            // return the list
             return cartBOList;
 
         }
@@ -394,6 +409,7 @@ namespace ZamaTronicts.Models
                 cartListToReturn.Add(cartToView);
 
             }
+            // return the list 
             return cartListToReturn;
         }
 

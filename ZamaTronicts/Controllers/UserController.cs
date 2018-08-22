@@ -21,17 +21,21 @@ namespace ZamaTronicts.Controllers
         {
             // create a new instance  of userModel
             UserPO _userModel = new UserPO();
+
+            // set the default role value of one which is customer
             _userModel.userRole = 1;
+
             // return the userModel and view
             return View(_userModel);
         }
 
+        // create a method to create a new user
         [HttpPost]
         public ActionResult CreateUser(UserPO userModel)
         {
             // pass the user model through the mapper to the method
-           
             _userDataAccess.CreateUser(_mapper.Map(userModel));
+
             // return to the login page
             return RedirectToAction("Login");
         }
@@ -40,11 +44,11 @@ namespace ZamaTronicts.Controllers
         [HttpGet]
         public ActionResult UpdateUser(int userTableID)
         {
+            // call the dropdown method to view available roles
             DropDown();
+
             // instaniate a new usermodel
             UserViewModel _userModel = new UserViewModel();
-
-     
 
             // pass the userID to the view method through the DAL
             // then pass through the mapper and set to the single user
@@ -57,20 +61,15 @@ namespace ZamaTronicts.Controllers
         [HttpPost]
         public ActionResult UpdateUser(UserPO userToMap)
         {
-            
-            //userToMap.roleName = (string)Session["roleName"];
-            //userToMap.userRole = (int)Session["userRole"];
-
 
             // pass the user through the mapper to the method in the DAL
             _userDataAccess.UpdateUser(_mapper.Map(userToMap));
+
             if ((string)Session["roleName"] == "customer")
             {
                 return RedirectToAction("ViewProducts", "Product");
             }
                 // return to a list of users
-
-
                 return RedirectToAction("ViewUsers");
         }
 
@@ -85,7 +84,6 @@ namespace ZamaTronicts.Controllers
             _userViewModel.listUserPO = _mapper.Map(_userDataAccess.ViewAllUsers());
 
             // return the viewModel
-
             return View(_userViewModel);
         }
 
@@ -137,14 +135,11 @@ namespace ZamaTronicts.Controllers
                 }
 
             }
-           
-
             return RedirectToAction("ViewProducts", "Product");
-
         }
 
         // create method for user logout
-        [HttpGet]// changed to post instead of get
+        [HttpGet]
         public ActionResult Logout()
         {
             // abandon the session
@@ -153,16 +148,22 @@ namespace ZamaTronicts.Controllers
             // return home
             return RedirectToAction("Index", "Home");
         }
+
+        // create a dropdown method to view all available roles
         [HttpGet]
         private void DropDown()
         {
+            // create a new list 
             ViewBag.ListRoles = new List<SelectListItem>();
             List<UserPO> role = _mapper.Map(_userDataAccess.ViewAllRoles());
+
+            // loop through the roles
             foreach (UserPO roles in role)
             {
                 ViewBag.ListRoles.Add(new SelectListItem { Text = roles.roleName, Value = roles.userRole.ToString() });
             }
         }
+
         [HttpGet]
         public ActionResult CreateRole()
         {
@@ -176,8 +177,7 @@ namespace ZamaTronicts.Controllers
         [HttpPost]
         public ActionResult CreateRole(UserPO userModel)
         {
-            // pass the user model through the mapper to the method
-            
+            // pass the user model through the mapper to the method  
             _userDataAccess.CreateRole(_mapper.Map(userModel));
 
             // return to the login page

@@ -12,21 +12,23 @@ namespace ZamaTronicts.Controllers
 {
     public class CartController : Controller
     {
-        // finish transaction table
-
+        // create a new instance of the mapper/ business/ and logic layers
         static Mapper _mapper = new Mapper();
         static CartDataAccess _cartDataAccess = new CartDataAccess();
         static ProductDataAccess _productDataAccess = new ProductDataAccess();
         static CartLogic _cartBusinessLogic = new CartLogic();
 
-
+        // create a get/post method to add an item to the cart
         [HttpGet]
         public ActionResult AddToCart(int productID)
         {
-            
+            // call the method and map the info to the productInfo
            ProductPO productInfo = _mapper.Map(_productDataAccess.ViewOneProduct(productID));
 
+            // create a new instance of cartPO
            CartPO _CheckOut = new CartPO();
+
+            // set correct values to the _checkOut
             _CheckOut.checkOutTotal = productInfo.productPrice;
             _CheckOut.productID = productID;
             _CheckOut.productQuantity = productInfo.productQuantity;
@@ -38,14 +40,17 @@ namespace ZamaTronicts.Controllers
            _CheckOut.checkOutShipping =  10.00M;
             _CheckOut.checkOutDate = DateTime.Today;
 
+            // map the info
             _cartDataAccess.CreateCart(_mapper.Map(_CheckOut));
 
+            // return to the view products view
             return RedirectToAction("ViewProducts","Product");
         }
 
         [HttpGet]
         public ActionResult ViewCart(int userTableID)
         {
+            // create the variables for the item and final 
             decimal finalTotal;
             decimal itemTotal;
 
@@ -74,8 +79,7 @@ namespace ZamaTronicts.Controllers
         {
             if (item.checkOutQuantity > item.productQuantity)
             {
-                ViewBag.Message = "Out of stock. Please lower the quantity";
-                return RedirectToAction("ViewCart", "Cart", new { userTableID = item.userTableID });
+                return RedirectToAction("ViewCart", "Cart", new { userTableID = item.userTableID } );
             }
             else
             {

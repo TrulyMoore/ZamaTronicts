@@ -10,7 +10,7 @@ namespace ZamaTronicts.Controllers
 {
     public class ProductController : Controller
     {
-        // instaniate a new instance of the mapper and productDataAccess
+        // instaniate a new instance of the mapper and DataAccess objects
         static Mapper _mapper = new Mapper();
         static ProductDataAccess _productDataAccess = new ProductDataAccess();
         static SupplierDataAccess _supplierDataAccess = new SupplierDataAccess();
@@ -34,6 +34,7 @@ namespace ZamaTronicts.Controllers
         [HttpPost]
         public ActionResult CreateProduct(ProductPO productToMap)
         {
+            // call the dropdown method to view the possible suppliers
             DropDown();
            
             // pass the elements of the product to the map through the method call and then to the DAL
@@ -78,9 +79,9 @@ namespace ZamaTronicts.Controllers
         {
             // create a new instance of productViewModel
             ProductViewModel _productViewModel = new ProductViewModel();
-
             _productViewModel.userTableID = (int)Session["userTableID"];
            
+            // call the method and pass the info
             _productViewModel.listProductPO = _mapper.Map(_productDataAccess.ViewAllProducts());
            
             // return the view
@@ -101,12 +102,17 @@ namespace ZamaTronicts.Controllers
             return RedirectToAction("ViewProducts");
         }
 
-
+        // create the dropdown method for the list of avaible suppliers
         [HttpGet]
         private void DropDown()
         {
+            // create a new list
             ViewBag.ListSuppliers = new List<SelectListItem>();
+            
+            // call the method and map info to the list
             List<SupplierPO> supplier = _mapper.Map(_supplierDataAccess.ViewAllSuppliers());
+            
+            // create a foreach loop to loop through the avaiable suppliers
             foreach (SupplierPO suppliers in supplier)
             {
                 ViewBag.ListSuppliers.Add(new SelectListItem { Text = suppliers.supplierName, Value = suppliers.supplierID.ToString() });
